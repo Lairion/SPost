@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block head_title %}
+{{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <a href="{% url 'posts_list' %}"><button class="btn btn-primary">Back to List</button></a> 
+        <a href="{{instance.get_absolute_url}}edit/"><button class="btn btn-info">Edit post</button></a> 
+        <a href="{{instance.get_absolute_url}}delete/"><button class="btn btn-danger">Delete post</button></a></div>
+
+</div>
+<div class="row">
+    <div class='col-sm-12 jumbotron'>
+    {% if instance.image %}
+    <img src='{{ instance.image.url }}' class='img-fluid' /> {% endif %}
+    <h1>{{ title }} <small>{{ instance.publish }}</small></h1> {% if instance.user.get_full_name %}
+    <p>Author: {{ instance.user.get_full_name }}</p>
+    {% endif %}
+    <div class='row'>
+        <div class='col-sm-12'>
+            <div class="post-detail-item">
+                {{ instance.get_markdown }}
+                <hr/>
+                <br/>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+{% endblock content %}
