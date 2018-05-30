@@ -18,18 +18,20 @@ class AuthViews:
     @staticmethod
     def sign_up(request):
         post_obj = request.POST
-        if post_obj.get("password") == post_obj.get("conf-password"):
-            user = User.objects.create_user(
-                post_obj.get("username"),
-                post_obj.get("email"),
-                post_obj.get("password"))
-            if user is not None:
-                login(request, user)
-                # Redirect to a success page.
-                return redirect("posts_list")
-        messages.error("Your data incorrect, please sign up again")
-            # Return an 'invalid login' error message.
-        return redirect("auth")
+        if request.method == "POST":
+            if post_obj.get("password") == post_obj.get("conf-password"):
+                user = User.objects.create_user(
+                    post_obj.get("username"),
+                    post_obj.get("email"),
+                    post_obj.get("password"))
+                if user is not None:
+                    login(request, user)
+                    # Redirect to a success page.
+                    return redirect("posts_list")
+            messages.error("Your data incorrect, please sign up again")
+                # Return an 'invalid login' error message.
+            return redirect("auth")
+        return "Please send use post method"
 
     def auth(request):
         context = {

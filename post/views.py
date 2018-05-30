@@ -7,12 +7,12 @@ from django.conf import settings
 from .forms import PostForm
 from .models import Post
 from likes import services
+import json
 
 class PostViews(object):
     """docstring for PostViews"""
     @staticmethod
     def post_create(request):
-        print('\n'.join(dir(request.user)))
         if not request.user.is_authenticated:
             messages.error(request, "Please, login in your account")
             return redirect("posts_list")
@@ -104,4 +104,8 @@ class PostViews(object):
                messages.error(request, "Item not delete. Access denied") 
         return redirect("posts_list")
 
+    def posts_list_json(request):
+        post_list = Post.objects.all()
+        json_array = json.dumps([{'slug':post.slug} for post in post_list])
+        return HttpResponse(json_array)
     
