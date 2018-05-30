@@ -17,3 +17,6 @@
 
 /auth - для авторизации
 /posts_list - Для создания постов
+
+для запуска бота использовать следующую команду из корневой директории проекта
+python manage.py <number_of_users> <max_posts_per_user> <max_likes_per_user> <optional:host_link>
